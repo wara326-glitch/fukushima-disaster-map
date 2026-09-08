@@ -30,15 +30,20 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 </style>
 </head>
 <body>
-<header><h1>福島県 局地災害 医療アクセスマップ</h1><span class="badge">現場 ↔ 病院</span><span class="badge">陸路 / 空路</span><span class="badge">二次救急 68施設</span></header>
+<header><h1>福島県 局地災害 医療アクセスマップ</h1><span class="badge">現場 ↔ 病院</span><span class="badge">陸路 / 空路</span><span class="badge">二次救急医療機関 19施設</span></header>
 <div class="app"><aside>
 <div class="card"><label>1. 発災地点</label><div class="small">住所・施設名を入力するか、地図をクリックして指定してください。</div><div class="row" style="margin-top:8px"><input id="addressInput" type="text" placeholder="例：福島県庁、総合南東北病院、郡山駅、イオン郡山フェスタ店"><button id="addressBtn" style="flex:0 0 auto">地点検索</button></div><div class="small" style="margin-top:5px">住所、病院、店舗、薬局、学校、駅、役所などを検索できます。Enterキーでも検索できます。</div><div id="searchCandidates" style="display:none;margin-top:8px"></div><div id="incidentText" style="margin-top:7px;font-size:12px">未設定</div><div class="row" style="margin-top:8px"><button id="geoBtn">現在地を使用</button><button class="secondary" id="clearBtn">解除</button></div></div>
-<div class="card"><label>2. 表示する医療機関</label><div class="filters"><label><input type="checkbox" id="fCritical" checked>救命救急</label><label><input type="checkbox" id="fDisaster" checked>災害拠点</label><label><input type="checkbox" id="fSecondary" checked>二次救急医療機関</label></div><div class="small" style="margin-top:7px">複数区分に該当する病院は重複表示せず、属性を併記します。</div></div>
+<div class="card"><label>2. 表示する医療機関</label>
+<div style="font-weight:700;font-size:13px;line-height:1.5">二次救急医療機関<br>（年間救急車受け入れ1000台以上）</div>
+<div class="small" style="margin-top:7px">対象：19病院</div>
+<input type="checkbox" id="fCritical" checked style="display:none">
+<input type="checkbox" id="fDisaster" checked style="display:none">
+<input type="checkbox" id="fSecondary" checked style="display:none">
+</div>
 <div class="card"><label>3. 空路推定設定</label><div class="row"><div><label>巡航速度 km/h</label><input id="airSpeed" type="number" value="220" min="80" max="350"></div><div><label>固定加算 分</label><input id="airOverhead" type="number" value="5" min="0" max="60"></div></div><div class="small" style="margin-top:7px">空路は病院―現場の直線距離から算出。実際の飛行可否・離着陸場・天候・管制・立上げ時間は別途判断。</div></div>
 <div class="card"><div class="row"><button id="calcBtn">陸路・空路を計算</button><select id="sortMode"><option value="road">陸路時間順</option><option value="air">空路時間順</option><option value="distance">直線距離順</option></select></div><div class="row" style="margin-top:8px"><div><label>陸路方向</label><select id="routeDirection"><option value="incidentToHospital">現場 → 病院</option><option value="hospitalToIncident">病院 → 現場</option></select></div><div><label>陸路計算対象</label><select id="roadLimit"><option value="all">表示中の全病院</option><option value="10">近い10病院</option><option value="5">近い5病院</option></select></div></div><div class="small" style="margin-top:7px">陸路は公開OSRMルーティングサービスを利用するため、インターネット接続が必要です。</div></div>
-<div class="card"><div class="legend"><span class="dot" style="background:#ef4444"></span>救命救急　<span class="dot" style="background:#f59e0b"></span>災害拠点　<span class="dot" style="background:#3b82f6"></span>二次救急医療機関</div></div>
-<div id="status" class="small" style="margin:6px 2px"></div><div style="font-weight:700;font-size:13px;margin:8px 2px">表示病院 <span id="hospitalCount">69</span>施設</div><div id="results"></div>
+<div id="status" class="small" style="margin:6px 2px"></div><div style="font-weight:700;font-size:13px;margin:8px 2px">二次救急医療機関（年間救急車受け入れ1000台以上）<br>表示病院 <span id="hospitalCount">19</span>施設</div><div id="results"></div>
 <div class="card small" style="margin-top:10px"><b>データについて</b><br>初期データは福島県の公開情報をもとにした実証用スターターセットです。正式運用時は県・消防・医師会で確定した二次救急医療機関マスタ、受入可否、ヘリポート情報、通行止め情報等への置換を想定しています。</div>
 </aside><div id="map"></div></div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="data.js?v=20260908-2118"></script><script src="app.js?v=20260908-2118"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="data.js?v=20260908-top19b"></script><script src="app.js?v=20260908-top19b"></script>
 </body></html>
