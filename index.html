@@ -58,7 +58,7 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 <div class="filters">
 <label><input type="checkbox" id="fCritical" checked>救命救急</label>
 <label><input type="checkbox" id="fDisaster" checked>災害拠点</label>
-<label><input type="checkbox" id="fSecondary" checked>二次救急</label>
+<label><input type="checkbox" id="fEmergency" checked>救急告示病院</label>
 </div>
 <div class="small" style="margin-top:7px">複数区分に該当する病院は重複表示せず、属性を併記します。</div>
 </div>
@@ -114,7 +114,7 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 
 <div class="card small" style="margin-top:10px">
 <b>データについて</b><br>
-病院位置は福島県・厚生労働省・各医療機関の公開所在地情報を基に見直しています。正式運用時は県・消防・医師会で確定した二次救急医療機関マスタ、受入可否、ヘリポート情報、通行止め情報等への置換を想定しています。
+病院位置は福島県・厚生労働省・各医療機関の公開所在地情報を基に見直しています。正式運用時は県・消防・医師会で確定した救急告示病院マスタ、受入可否、ヘリポート情報、通行止め情報等への置換を想定しています。
 </div>
 </aside>
 <div id="map"></div>
@@ -125,32 +125,32 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 // 実証用スターターセット。
 // 正式運用では県公式マスタ（CSV/GeoJSON/API）へ差替え推奨。
 const hospitals = [
-{name:"福島県立医科大学附属病院",lat:37.68944,lng:140.47139,critical:true,disaster:true,secondary:false,area:"県北"},
-{name:"福島赤十字病院",lat:37.7690192,lng:140.484089,critical:false,disaster:true,secondary:true,area:"県北"},
-{name:"大原綜合病院",lat:37.753052,lng:140.469048,critical:false,disaster:false,secondary:true,area:"県北"},
-{name:"済生会福島総合病院",lat:37.7235235,lng:140.4446619,critical:false,disaster:false,secondary:true,area:"県北"},
-{name:"公立藤田総合病院",lat:37.8763,lng:140.5502,critical:false,disaster:true,secondary:true,area:"県北"},
-{name:"枡記念病院",lat:37.5545422,lng:140.4040068,critical:false,disaster:true,secondary:true,area:"県北"},
-{name:"太田西ノ内病院",lat:37.406443,lng:140.36599,critical:true,disaster:true,secondary:true,area:"県中"},
-{name:"総合南東北病院",lat:37.4229006,lng:140.3835681,critical:false,disaster:true,secondary:true,area:"県中"},
-{name:"星総合病院",lat:37.4022197,lng:140.3927745,critical:false,disaster:false,secondary:true,area:"県中"},
-{name:"寿泉堂綜合病院",lat:37.3977906,lng:140.3861421,critical:false,disaster:false,secondary:true,area:"県中"},
-{name:"公立岩瀬病院",lat:37.2950474,lng:140.3743453,critical:false,disaster:true,secondary:true,area:"県中"},
-{name:"須賀川病院",lat:37.2895693,lng:140.3649171,critical:false,disaster:false,secondary:true,area:"県中"},
-{name:"ひらた中央病院",lat:37.24422,lng:140.56841,critical:false,disaster:false,secondary:true,area:"県中"},
-{name:"白河厚生総合病院",lat:37.145701,lng:140.2151904,critical:false,disaster:true,secondary:true,area:"県南"},
-{name:"会津中央病院",lat:37.5221164,lng:139.9453533,critical:true,disaster:true,secondary:true,area:"会津"},
-{name:"竹田綜合病院",lat:37.490077,lng:139.9225175,critical:false,disaster:true,secondary:true,area:"会津"},
-{name:"福島県立医科大学会津医療センター",lat:37.5523053,lng:139.9075437,critical:false,disaster:true,secondary:true,area:"会津"},
-{name:"福島県立南会津病院",lat:37.206425,lng:139.760624,critical:false,disaster:true,secondary:true,area:"南会津"},
-{name:"いわき市医療センター",lat:37.0425485,lng:140.8697535,critical:true,disaster:true,secondary:true,area:"いわき"},
-{name:"福島労災病院",lat:37.0393082,lng:140.8644069,critical:false,disaster:true,secondary:true,area:"いわき"},
-{name:"松村総合病院",lat:37.0525661,lng:140.8919102,critical:false,disaster:false,secondary:true,area:"いわき"},
-{name:"かしま病院",lat:36.9929259,lng:140.9111703,critical:false,disaster:false,secondary:true,area:"いわき"},
-{name:"呉羽総合病院",lat:36.9494,lng:140.8624,critical:false,disaster:false,secondary:true,area:"いわき"},
-{name:"南相馬市立総合病院",lat:37.6375094,lng:140.9851348,critical:false,disaster:true,secondary:true,area:"相双"},
-{name:"公立相馬総合病院",lat:37.8112213,lng:140.9218815,critical:false,disaster:true,secondary:true,area:"相双"},
-{name:"福島県ふたば医療センター附属病院",lat:37.3467784,lng:141.0070478,critical:false,disaster:false,secondary:true,area:"相双"}
+{name:"福島県立医科大学附属病院",lat:37.68944,lng:140.47139,critical:true,disaster:true,emergency:false,area:"県北"},
+{name:"福島赤十字病院",lat:37.7690192,lng:140.484089,critical:false,disaster:true,emergency:true,area:"県北"},
+{name:"大原綜合病院",lat:37.753052,lng:140.469048,critical:false,disaster:false,emergency:true,area:"県北"},
+{name:"済生会福島総合病院",lat:37.7235235,lng:140.4446619,critical:false,disaster:false,emergency:true,area:"県北"},
+{name:"公立藤田総合病院",lat:37.8763,lng:140.5502,critical:false,disaster:true,emergency:true,area:"県北"},
+{name:"枡記念病院",lat:37.5545422,lng:140.4040068,critical:false,disaster:true,emergency:true,area:"県北"},
+{name:"太田西ノ内病院",lat:37.406443,lng:140.36599,critical:true,disaster:true,emergency:true,area:"県中"},
+{name:"総合南東北病院",lat:37.4229006,lng:140.3835681,critical:false,disaster:true,emergency:true,area:"県中"},
+{name:"星総合病院",lat:37.4022197,lng:140.3927745,critical:false,disaster:false,emergency:true,area:"県中"},
+{name:"寿泉堂綜合病院",lat:37.3977906,lng:140.3861421,critical:false,disaster:false,emergency:true,area:"県中"},
+{name:"公立岩瀬病院",lat:37.2950474,lng:140.3743453,critical:false,disaster:true,emergency:true,area:"県中"},
+{name:"須賀川病院",lat:37.2895693,lng:140.3649171,critical:false,disaster:false,emergency:true,area:"県中"},
+{name:"ひらた中央病院",lat:37.24422,lng:140.56841,critical:false,disaster:false,emergency:true,area:"県中"},
+{name:"白河厚生総合病院",lat:37.145701,lng:140.2151904,critical:false,disaster:true,emergency:true,area:"県南"},
+{name:"会津中央病院",lat:37.5221164,lng:139.9453533,critical:true,disaster:true,emergency:true,area:"会津"},
+{name:"竹田綜合病院",lat:37.490077,lng:139.9225175,critical:false,disaster:true,emergency:true,area:"会津"},
+{name:"福島県立医科大学会津医療センター",lat:37.5523053,lng:139.9075437,critical:false,disaster:true,emergency:true,area:"会津"},
+{name:"福島県立南会津病院",lat:37.206425,lng:139.760624,critical:false,disaster:true,emergency:true,area:"南会津"},
+{name:"いわき市医療センター",lat:37.0425485,lng:140.8697535,critical:true,disaster:true,emergency:true,area:"いわき"},
+{name:"福島労災病院",lat:37.0393082,lng:140.8644069,critical:false,disaster:true,emergency:true,area:"いわき"},
+{name:"松村総合病院",lat:37.0525661,lng:140.8919102,critical:false,disaster:false,emergency:true,area:"いわき"},
+{name:"かしま病院",lat:36.9929259,lng:140.9111703,critical:false,disaster:false,emergency:true,area:"いわき"},
+{name:"呉羽総合病院",lat:36.9494,lng:140.8624,critical:false,disaster:false,emergency:true,area:"いわき"},
+{name:"南相馬市立総合病院",lat:37.6375094,lng:140.9851348,critical:false,disaster:true,emergency:true,area:"相双"},
+{name:"公立相馬総合病院",lat:37.8112213,lng:140.9218815,critical:false,disaster:true,emergency:true,area:"相双"},
+{name:"福島県ふたば医療センター附属病院",lat:37.3467784,lng:141.0070478,critical:false,disaster:false,emergency:true,area:"相双"}
 ];
 
 const map=L.map('map',{zoomControl:true}).setView([37.40,140.30],9);
@@ -162,10 +162,10 @@ let incident=null,incidentMarker=null,routeLayer=null;
 const hospitalLayers=new Map();
 function iconColor(h){return h.critical?'#ef4444':h.disaster?'#f59e0b':'#3b82f6'}
 function visible(h){
- return (h.critical&&fCritical.checked)||(h.disaster&&fDisaster.checked)||(h.secondary&&fSecondary.checked);
+ return (h.critical&&fCritical.checked)||(h.disaster&&fDisaster.checked)||(h.emergency&&fEmergency.checked);
 }
 function catText(h){
- let x=[]; if(h.critical)x.push("救命救急"); if(h.disaster)x.push("災害拠点"); if(h.secondary)x.push("二次救急"); return x.join(" / ");
+ let x=[]; if(h.critical)x.push("救命救急"); if(h.disaster)x.push("災害拠点"); if(h.emergency)x.push("救急告示病院"); return x.join(" / ");
 }
 function drawHospitals(){
  hospitalLayers.forEach(x=>map.removeLayer(x));hospitalLayers.clear();
@@ -248,7 +248,7 @@ document.getElementById("addressInput").addEventListener("keydown",e=>{if(e.key=
 
 geoBtn.onclick=()=>navigator.geolocation?.getCurrentPosition(p=>{setIncident(p.coords.latitude,p.coords.longitude);map.setView([p.coords.latitude,p.coords.longitude],12)},()=>alert("現在地を取得できませんでした。"));
 clearBtn.onclick=()=>{incident=null;if(incidentMarker)map.removeLayer(incidentMarker);incidentMarker=null;incidentText.textContent="未設定";results.innerHTML="";status.textContent="";if(routeLayer)map.removeLayer(routeLayer)};
-[fCritical,fDisaster,fSecondary].forEach(x=>x.onchange=()=>{drawHospitals();renderResults();});
+[fCritical,fDisaster,fEmergency].forEach(x=>x.onchange=()=>{drawHospitals();renderResults();});
 [airSpeed,airOverhead].forEach(x=>x.oninput=renderResults);
 sortMode.onchange=renderResults;
 if(window.routeDirection)routeDirection.onchange=()=>{roadTimes={};roadDistances={};renderResults();status.textContent="方向を変更しました。陸路を再計算してください。";};
