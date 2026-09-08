@@ -30,7 +30,7 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 </style>
 </head>
 <body>
-<header><h1>福島県 局地災害 医療アクセスマップ</h1><span class="badge">現場 ↔ 病院</span><span class="badge">陸路 / 空路</span><span class="badge">二次救急 69施設</span></header>
+<header><h1>福島県 局地災害 医療アクセスマップ</h1><span class="badge">現場 ↔ 病院</span><span class="badge">陸路 / 空路</span><span class="badge">二次救急 68施設</span></header>
 <div class="app"><aside>
 <div class="card"><label>1. 発災地点</label><div class="small">住所・施設名を入力するか、地図をクリックして指定してください。</div><div class="row" style="margin-top:8px"><input id="addressInput" type="text" placeholder="例：福島県庁、総合南東北病院、郡山駅、イオン郡山フェスタ店"><button id="addressBtn" style="flex:0 0 auto">地点検索</button></div><div class="small" style="margin-top:5px">住所、病院、店舗、薬局、学校、駅、役所などを検索できます。Enterキーでも検索できます。</div><div id="searchCandidates" style="display:none;margin-top:8px"></div><div id="incidentText" style="margin-top:7px;font-size:12px">未設定</div><div class="row" style="margin-top:8px"><button id="geoBtn">現在地を使用</button><button class="secondary" id="clearBtn">解除</button></div></div>
 <div class="card"><label>2. 表示する医療機関</label><div class="filters"><label><input type="checkbox" id="fCritical" checked>救命救急</label><label><input type="checkbox" id="fDisaster" checked>災害拠点</label><label><input type="checkbox" id="fSecondary" checked>二次救急医療機関</label></div><div class="small" style="margin-top:7px">複数区分に該当する病院は重複表示せず、属性を併記します。</div></div>
