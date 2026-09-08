@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>福島県 災害・医療情報統合マップ</title>
+<title>福島県 局地災害 医療アクセスマップ</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--bg:#0b1220;--panel:#111827;--line:#263244;--text:#e5e7eb;--muted:#9ca3af;--accent:#60a5fa;--red:#f87171;--amber:#fbbf24;--green:#34d399}
@@ -31,8 +31,8 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 </head>
 <body>
 <header>
-<h1>福島県 災害・医療情報統合マップ</h1>
-<span class="badge">地震・津波・水害・噴火</span><span class="badge">原子力災害</span><span class="badge">医療アクセス</span>
+<h1>福島県 局地災害 医療アクセスマップ</h1>
+<span class="badge">現場 ↔ 病院</span><span class="badge">陸路 / 空路</span>
 </header>
 <div class="app">
 <aside>
@@ -122,8 +122,7 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 <div class="legend">
 <span class="dot" style="background:#ef4444"></span>救命救急　
 <span class="dot" style="background:#f59e0b"></span>災害拠点　
-<span class="dot" style="background:#3b82f6"></span>二次救急　
-<span class="dot" style="background:#a855f7"></span>原子力施設
+<span class="dot" style="background:#3b82f6"></span>二次救急
 </div>
 </div>
 
@@ -132,7 +131,7 @@ button.secondary{background:#1f2937;border-color:#4b5563}.row{display:flex;gap:8
 
 <div class="card small" style="margin-top:10px">
 <b>データについて</b><br>
-初期データは福島県等の公開情報をもとにした実証用スターターセットです。災害情報・原子力防災情報は公式発表を最優先してください。正式運用時は県・消防・医師会で確定した医療機関マスタ、受入可否、ヘリポート、道路規制、避難情報等との連携を想定しています。
+初期データは福島県の公開情報をもとにした実証用スターターセットです。正式運用時は県・消防・医師会で確定した二次救急医療機関マスタ、受入可否、ヘリポート情報、通行止め情報等への置換を想定しています。
 </div>
 </aside>
 <div id="map"></div>
@@ -179,29 +178,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 
 let incident=null,incidentMarker=null,routeLayer=null;
 const hospitalLayers=new Map();
-const nuclearLayers=[];
-const nuclearSites=[
- {name:"福島第一原子力発電所",lat:37.4214,lng:141.0329,note:"福島第一：県地域防災計画ではPAZを設定しない。原子力災害対策重点区域は関係13市町村全域。"},
- {name:"福島第二原子力発電所",lat:37.3195,lng:141.0256,note:"福島第二：PAZは概ね5kmを目安に設定。UPZ等は県・市町村の公式計画・指示を確認。"}
-];
-function drawNuclear(){
- nuclearLayers.forEach(x=>map.removeLayer(x)); nuclearLayers.length=0;
- const on=document.getElementById("fNuclear")?.checked;
- const guide=document.getElementById("fNuclearGuide")?.checked;
- if(!on)return;
- nuclearSites.forEach((s,idx)=>{
-   const m=L.circleMarker([s.lat,s.lng],{radius:9,color:"#fff",weight:2,fillColor:"#a855f7",fillOpacity:.95})
-    .addTo(map).bindPopup("<b>☢ "+s.name+"</b><br>"+s.note);
-   nuclearLayers.push(m);
-   if(guide){
-     const c5=L.circle([s.lat,s.lng],{radius:5000,color:"#a855f7",weight:1,dashArray:"5,5",fill:false,opacity:.8}).addTo(map)
-      .bindTooltip("参考 5km");
-     const c30=L.circle([s.lat,s.lng],{radius:30000,color:"#a855f7",weight:1,dashArray:"8,6",fill:false,opacity:.45}).addTo(map)
-      .bindTooltip("参考 30km");
-     nuclearLayers.push(c5,c30);
-   }
- });
-}
 function iconColor(h){return h.critical?'#ef4444':h.disaster?'#f59e0b':'#3b82f6'}
 function visible(h){
  return (h.critical&&fCritical.checked)||(h.disaster&&fDisaster.checked)||(h.secondary&&fSecondary.checked);
@@ -219,8 +195,6 @@ function drawHospitals(){
  });
 }
 drawHospitals();
-drawNuclear();
-[fNuclear,fNuclearGuide].forEach(x=>x.onchange=drawNuclear);
 
 function setIncident(lat,lng){
  incident={lat,lng};
